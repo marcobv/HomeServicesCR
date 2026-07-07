@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Publicar servicio')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow rounded-4">
+                <div class="card-body p-4">
+                    <h1 class="h3 fw-bold text-primary-hs mb-3">Publicar servicio</h1>
+                    <form th:action="@{/proveedor/servicios/guardar}" th:object="${servicio}" method="post" class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre del servicio</label>
+                            <input th:field="*{nombre}" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Precio de referencia</label>
+                            <input th:field="*{precioReferencia}" type="number" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Categoría</label>
+                            <select name="idCategoria" class="form-select" required>
+                                <option value="">Seleccione</option>
+                                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombre}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Proveedor</label>
+                            <select name="idProveedor" class="form-select" required>
+                                <option value="">Seleccione</option>
+                                <option th:each="proveedor : ${proveedores}" th:value="${proveedor.idProveedor}" th:text="${proveedor.nombre}"></option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Descripción</label>
+                            <textarea th:field="*{descripcion}" class="form-control" rows="5" required></textarea>
+                        </div>
+                        <div class="col-12 form-check ms-2">
+                            <input th:field="*{activo}" class="form-check-input" type="checkbox"/>
+                            <label class="form-check-label">Servicio activo</label>
+                        </div>
+                        <div class="col-12 text-end">
+                            <button class="btn btn-primary-hs" type="submit">Guardar servicio</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
+</html>

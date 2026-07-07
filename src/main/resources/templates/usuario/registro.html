@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Registro')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow rounded-4">
+                <div class="card-body p-4">
+                    <h1 class="h3 fw-bold text-primary-hs mb-3">Crear cuenta</h1>
+                    <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post" class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre completo</label>
+                            <input th:field="*{nombreCompleto}" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Correo electrónico</label>
+                            <input th:field="*{correo}" type="email" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Contraseña</label>
+                            <input th:field="*{password}" type="password" class="form-control" required/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tipo de usuario</label>
+                            <select th:field="*{rol}" class="form-select">
+                                <option value="CLIENTE">Cliente</option>
+                                <option value="PROVEEDOR">Proveedor</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Teléfono</label>
+                            <input th:field="*{telefono}" class="form-control"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Ubicación</label>
+                            <input th:field="*{ubicacion}" class="form-control" placeholder="San José, Heredia, Alajuela"/>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end gap-2">
+                            <a th:href="@{/inicio}" class="btn btn-outline-secondary">Cancelar</a>
+                            <button class="btn btn-primary-hs" type="submit">Crear cuenta</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
+</html>

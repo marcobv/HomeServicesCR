@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Panel proveedor')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 fw-bold text-primary-hs mb-1">Panel del proveedor</h1>
+            <p class="text-muted mb-0" th:text="${proveedor != null ? proveedor.nombre : 'Proveedor demo'}">Proveedor</p>
+        </div>
+        <a class="btn btn-accent-hs" th:href="@{/proveedor/servicios/nuevo}">Publicar servicio</a>
+    </div>
+    <div class="row g-3 mb-4">
+        <div class="col-md-4"><div class="card metric-card"><div class="card-body"><span>Solicitudes nuevas</span><strong th:text="${#lists.size(solicitudes)}">0</strong></div></div></div>
+        <div class="col-md-4"><div class="card metric-card"><div class="card-body"><span>Servicios publicados</span><strong th:text="${#lists.size(servicios)}">0</strong></div></div></div>
+        <div class="col-md-4"><div class="card metric-card"><div class="card-body"><span>Calificación</span><strong th:text="${proveedor != null ? proveedor.calificacionPromedio : '0.0'}">4.9</strong></div></div></div>
+    </div>
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <h2 class="h5 fw-bold text-primary-hs mb-3">Solicitudes recibidas</h2>
+            <div th:if="${#lists.isEmpty(solicitudes)}" class="alert alert-info">No hay solicitudes recibidas todavía.</div>
+            <div class="table-responsive" th:if="${!#lists.isEmpty(solicitudes)}">
+                <table class="table align-middle">
+                    <thead><tr><th>Cliente</th><th>Servicio</th><th>Fecha</th><th>Estado</th><th>Acción</th></tr></thead>
+                    <tbody>
+                    <tr th:each="solicitud : ${solicitudes}">
+                        <td th:text="${solicitud.cliente.nombreCompleto}">Cliente</td>
+                        <td th:text="${solicitud.servicio.nombre}">Servicio</td>
+                        <td th:text="${solicitud.fechaServicio}">Fecha</td>
+                        <td><span class="badge estado" th:text="${solicitud.estado}">Pendiente</span></td>
+                        <td>
+                            <form th:action="@{/solicitudes/{id}/estado(id=${solicitud.idSolicitud})}" method="post" class="d-flex gap-2">
+                                <select name="estado" class="form-select form-select-sm">
+                                    <option value="ACEPTADA">Aceptar</option>
+                                    <option value="RECHAZADA">Rechazar</option>
+                                    <option value="FINALIZADA">Finalizar</option>
+                                </select>
+                                <button class="btn btn-primary-hs btn-sm" type="submit">Guardar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
+</html>

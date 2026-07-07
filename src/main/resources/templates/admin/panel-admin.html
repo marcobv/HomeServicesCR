@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Panel administrativo')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 fw-bold text-primary-hs mb-1">Panel administrativo</h1>
+            <p class="text-muted mb-0">Gestión inicial de usuarios, proveedores, categorías y comentarios.</p>
+        </div>
+        <a class="btn btn-primary-hs" th:href="@{/admin/categorias}">Administrar categorías</a>
+    </div>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3"><div class="card metric-card"><div class="card-body"><span>Usuarios registrados</span><strong th:text="${#lists.size(usuarios)}">0</strong></div></div></div>
+        <div class="col-md-3"><div class="card metric-card"><div class="card-body"><span>Proveedores</span><strong th:text="${#lists.size(proveedores)}">0</strong></div></div></div>
+        <div class="col-md-3"><div class="card metric-card"><div class="card-body"><span>Solicitudes</span><strong th:text="${#lists.size(solicitudes)}">0</strong></div></div></div>
+        <div class="col-md-3"><div class="card metric-card"><div class="card-body"><span>Reportes</span><strong th:text="${#lists.size(comentariosReportados)}">0</strong></div></div></div>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card admin-action h-100"><div class="card-body"><h2 class="h5 fw-bold">Verificación de proveedores</h2><p class="text-muted">Revise identidad y documentos de proveedores pendientes.</p><a class="btn btn-outline-primary-hs" href="#">Abrir</a></div></div>
+        </div>
+        <div class="col-md-6">
+            <div class="card admin-action h-100"><div class="card-body"><h2 class="h5 fw-bold">Administración de categorías</h2><p class="text-muted">Crear, editar o desactivar categorías del catálogo.</p><a class="btn btn-outline-primary-hs" th:href="@{/admin/categorias}">Abrir</a></div></div>
+        </div>
+        <div class="col-md-6">
+            <div class="card admin-action h-100"><div class="card-body"><h2 class="h5 fw-bold">Moderación de comentarios</h2><p class="text-muted">Consultar contenido reportado por usuarios.</p><a class="btn btn-outline-primary-hs" href="#comentarios">Abrir</a></div></div>
+        </div>
+        <div class="col-md-6">
+            <div class="card admin-action h-100"><div class="card-body"><h2 class="h5 fw-bold">Gestión de usuarios</h2><p class="text-muted">Consultar cuentas activas por rol.</p><a class="btn btn-outline-primary-hs" href="#usuarios">Abrir</a></div></div>
+        </div>
+    </div>
+    <section class="mt-5" id="usuarios">
+        <h2 class="h5 fw-bold text-primary-hs">Usuarios registrados</h2>
+        <div class="table-responsive card border-0 shadow-sm rounded-4 p-3">
+            <table class="table align-middle mb-0">
+                <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th></tr></thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.nombreCompleto}">Nombre</td>
+                        <td th:text="${usuario.correo}">correo</td>
+                        <td th:text="${usuario.rol}">Rol</td>
+                        <td><span class="badge bg-success" th:text="${usuario.activo ? 'Activo' : 'Inactivo'}">Activo</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
+</html>

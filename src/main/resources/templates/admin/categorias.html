@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Categorías')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="row g-4">
+        <section class="col-lg-4">
+            <div class="card border-0 shadow rounded-4">
+                <div class="card-body p-4">
+                    <h1 class="h4 fw-bold text-primary-hs mb-3">Nueva categoría</h1>
+                    <form th:action="@{/admin/categorias/guardar}" th:object="${categoria}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input th:field="*{nombre}" class="form-control" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea th:field="*{descripcion}" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input th:field="*{activo}" class="form-check-input" type="checkbox"/>
+                            <label class="form-check-label">Activa</label>
+                        </div>
+                        <button class="btn btn-primary-hs w-100" type="submit">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h2 class="h4 fw-bold text-primary-hs mb-3">Categorías registradas</h2>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead><tr><th>Nombre</th><th>Descripción</th><th>Estado</th><th></th></tr></thead>
+                            <tbody>
+                            <tr th:each="categoria : ${categorias}">
+                                <td th:text="${categoria.nombre}">Categoría</td>
+                                <td th:text="${categoria.descripcion}">Descripción</td>
+                                <td><span class="badge" th:classappend="${categoria.activo ? ' bg-success' : ' bg-secondary'}" th:text="${categoria.activo ? 'Activa' : 'Inactiva'}">Activa</span></td>
+                                <td class="text-end"><a class="btn btn-outline-danger btn-sm" th:href="@{/admin/categorias/desactivar/{id}(id=${categoria.idCategoria})}">Desactivar</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
+</html>

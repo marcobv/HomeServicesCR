@@ -1,0 +1,18 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+HELP.md
+.mvn/
+mvnw
+mvnw.cmd
+src/main/resources/application.properties
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### Local config ###
+*.log
+.env

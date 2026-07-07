@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Resultados')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="row g-4">
+        <aside class="col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 sticky-lg-top filtros-card">
+                <div class="card-body">
+                    <h2 class="h5 fw-bold text-primary-hs">Filtros</h2>
+                    <form th:action="@{/servicios/resultados}" method="get">
+                        <div class="mb-3">
+                            <label class="form-label">Buscar</label>
+                            <input class="form-control" type="text" name="texto" th:value="${texto}" placeholder="Electricidad"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Categoría</label>
+                            <select class="form-select" name="categoriaId">
+                                <option value="">Todas</option>
+                                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:selected="${categoria.idCategoria == categoriaId}" th:text="${categoria.nombre}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ubicación</label>
+                            <input class="form-control" name="ubicacion" th:value="${ubicacion}" placeholder="Heredia"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Precio máximo</label>
+                            <input class="form-control" type="number" name="precioMax" th:value="${precioMax}" placeholder="30000"/>
+                        </div>
+                        <button class="btn btn-primary-hs w-100" type="submit">Aplicar filtros</button>
+                        <a class="btn btn-outline-secondary w-100 mt-2" th:href="@{/servicios/resultados}">Limpiar</a>
+                    </form>
+                </div>
+            </div>
+        </aside>
+        <section class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="h3 fw-bold text-primary-hs">Resultados de servicios</h1>
+                <span class="badge bg-info-soft text-primary-hs" th:text="${#lists.size(servicios)} + ' resultados'">0 resultados</span>
+            </div>
+            <div th:if="${#lists.isEmpty(servicios)}" class="alert alert-warning">No se encontraron servicios con los filtros indicados.</div>
+            <div class="vstack gap-3">
+                <div class="card border-0 shadow-sm rounded-4" th:each="servicio : ${servicios}">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <span class="badge bg-info-soft text-primary-hs" th:text="${servicio.categoria.nombre}">Categoría</span>
+                                <h2 class="h5 fw-bold mt-2 mb-1" th:text="${servicio.proveedor.nombre}">Proveedor</h2>
+                                <p class="text-muted mb-1" th:text="${servicio.nombre + ' · ' + servicio.proveedor.ubicacion}">Servicio</p>
+                                <p class="small mb-0" th:text="${servicio.descripcion}">Descripción</p>
+                            </div>
+                            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                <div class="rating mb-1" th:text="'★ ' + ${servicio.proveedor.calificacionPromedio}">★ 4.8</div>
+                                <p class="fw-bold text-primary-hs" th:text="'Desde ₡' + ${servicio.precioReferencia}">Desde ₡20000</p>
+                                <a class="btn btn-accent-hs" th:href="@{/servicios/proveedor/{id}(id=${servicio.proveedor.idProveedor})}">Ver perfil</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,104 @@
+/* HomeServices CR - estilos propios mínimos sobre Bootstrap WebJars */
+:root {
+    --hs-primary: #173B57;
+    --hs-accent: #22A699;
+    --hs-light: #F4F7F9;
+    --hs-warning: #F4B942;
+    --hs-danger: #C84B4B;
+}
+
+body {
+    background: #f8fafb;
+    color: #1f2d3d;
+}
+
+.text-primary-hs { color: var(--hs-primary) !important; }
+.bg-primary-hs { background-color: var(--hs-primary) !important; }
+.bg-info-soft { background-color: #e4f5f4 !important; }
+
+.btn-primary-hs {
+    background-color: var(--hs-primary);
+    border-color: var(--hs-primary);
+    color: #fff;
+}
+.btn-primary-hs:hover { background-color: #0f2c42; border-color: #0f2c42; color: #fff; }
+
+.btn-outline-primary-hs {
+    border-color: var(--hs-primary);
+    color: var(--hs-primary);
+}
+.btn-outline-primary-hs:hover { background-color: var(--hs-primary); color: #fff; }
+
+.btn-accent-hs {
+    background-color: var(--hs-accent);
+    border-color: var(--hs-accent);
+    color: #fff;
+}
+.btn-accent-hs:hover { background-color: #198d83; border-color: #198d83; color: #fff; }
+
+.logo-hs {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: #e4f5f4;
+    color: var(--hs-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.hero-hs {
+    background: linear-gradient(135deg, #eaf3f7 0%, #f9fbfc 70%);
+    border-bottom: 1px solid #e8eef2;
+}
+
+.categoria-card {
+    border: 0;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(23, 59, 87, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.categoria-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(23, 59, 87, 0.14);
+}
+
+.icono-categoria, .avatar-proveedor {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #d8f3f1;
+    color: var(--hs-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.filtros-card { top: 90px; }
+.rating { color: #b27b00; font-weight: 700; }
+.disponibilidad { background: #e4f5f4; color: var(--hs-primary); padding: 0.65rem 0.8rem; }
+.estado { background: #eef1f4; color: var(--hs-primary); }
+
+.metric-card, .admin-action {
+    border: 0;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(23, 59, 87, 0.08);
+}
+.metric-card span {
+    color: #6c757d;
+    display: block;
+    font-size: 0.9rem;
+}
+.metric-card strong {
+    color: var(--hs-primary);
+    font-size: 2rem;
+    display: block;
+}
+
+.table thead th {
+    background: #e4f5f4;
+    color: var(--hs-primary);
+}

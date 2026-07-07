@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head('Iniciar sesión')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow rounded-4">
+                <div class="card-body p-4">
+                    <h1 class="h3 fw-bold text-primary-hs mb-3">Iniciar sesión</h1>
+                    <p class="text-muted">Use un usuario de prueba o uno registrado desde el formulario.</p>
+                    <form th:action="@{/usuarios/login}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Correo electrónico</label>
+                            <input type="email" name="correo" class="form-control" placeholder="marco.demo@homeservices.cr" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" name="password" class="form-control" placeholder="123456" required/>
+                        </div>
+                        <button class="btn btn-primary-hs w-100" type="submit">Ingresar</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a th:href="@{/usuarios/registro}">Crear una cuenta</a>
+                    </div>
+                    <div class="alert alert-info small mt-4 mb-0">
+                        Usuarios demo: marco.demo@homeservices.cr, proveedor.demo@homeservices.cr, admin@homeservices.cr. Contraseña: 123456.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
+</html>
