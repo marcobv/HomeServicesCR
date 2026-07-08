@@ -1,37 +1,95 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragmentos :: head('Inicio')}"></head>
+
 <body>
 <header th:replace="~{fragmentos :: header}"></header>
 <div th:replace="~{fragmentos :: mensajes}"></div>
 
 <section class="hero-hs">
-    <div class="container py-5">
-        <div class="row align-items-center g-4">
+    <div class="container py-5 py-lg-6">
+        <div class="row align-items-center g-5">
             <div class="col-lg-7">
-                <span class="badge rounded-pill bg-info-soft text-primary-hs mb-3">Servicios del hogar a su alcance</span>
-                <h1 class="display-5 fw-bold text-primary-hs">Profesionales de confianza, cerca de usted</h1>
-                <p class="lead text-muted">Compare opciones, revise calificaciones verificadas y solicite servicios para su hogar o pequeño negocio desde un solo lugar.</p>
-                <form class="row g-2 mt-4" th:action="@{/servicios/resultados}" method="get">
-                    <div class="col-md-8">
-                        <input class="form-control form-control-lg" type="text" name="texto" placeholder="¿Qué servicio necesita? Ej. electricidad, limpieza, jardinería"/>
+                <span class="hero-badge mb-3">
+                    Servicios del hogar a su alcance
+                </span>
+
+                <h1 class="display-4 mb-3">
+                    Profesionales verificados para resolver necesidades del hogar
+                </h1>
+
+                <p class="lead mb-4">
+                    Busque, compare y solicite servicios de confianza en Costa Rica desde una plataforma centralizada,
+                    con perfiles, disponibilidad y calificaciones verificadas.
+                </p>
+
+                <form class="search-panel row g-2 align-items-center mt-4"
+                      th:action="@{/servicios/resultados}"
+                      method="get">
+                    <div class="col-lg-8">
+                        <input class="form-control form-control-lg"
+                               type="text"
+                               name="texto"
+                               placeholder="¿Qué servicio necesita? Ej. electricidad, limpieza, jardinería"/>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-accent-hs btn-lg w-100" type="submit">Buscar</button>
+                    <div class="col-lg-4">
+                        <button class="btn btn-accent-hs btn-lg w-100" type="submit">
+                            Buscar servicio
+                        </button>
                     </div>
                 </form>
+
+                <div class="trust-strip d-flex flex-column flex-md-row gap-3 gap-md-4 mt-4">
+                    <div>
+                        <strong>Perfiles organizados</strong>
+                        <div class="small">Información clara para comparar proveedores.</div>
+                    </div>
+                    <div>
+                        <strong>Solicitudes con seguimiento</strong>
+                        <div class="small">Estados visibles para cliente y proveedor.</div>
+                    </div>
+                    <div>
+                        <strong>Calificaciones verificadas</strong>
+                        <div class="small">Opiniones asociadas a servicios registrados.</div>
+                    </div>
+                </div>
             </div>
+
             <div class="col-lg-5">
-                <div class="card border-0 shadow-lg rounded-4">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold text-primary-hs">Avance funcional</h5>
-                        <p class="text-muted mb-3">Base integrada con MVC, Thymeleaf, JPA y MySQL compartido.</p>
-                        <div class="d-flex gap-2 flex-wrap">
-                            <span class="badge bg-success">Registro</span>
-                            <span class="badge bg-success">Búsqueda</span>
-                            <span class="badge bg-success">Solicitudes</span>
-                            <span class="badge bg-warning text-dark">Calificaciones</span>
-                            <span class="badge bg-primary">Paneles por rol</span>
+                <div class="hero-card p-4 p-lg-5">
+                    <span class="section-kicker mb-3">Cómo funciona</span>
+                    <h2 class="h4 fw-bold text-primary-hs mb-4">
+                        Un flujo simple para contratar servicios
+                    </h2>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="step-dot">1</div>
+                        <div>
+                            <h3 class="h6 fw-bold mb-1">Busque el servicio</h3>
+                            <p class="text-muted small mb-0">
+                                Encuentre opciones por categoría, ubicación o palabra clave.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="step-dot">2</div>
+                        <div>
+                            <h3 class="h6 fw-bold mb-1">Compare proveedores</h3>
+                            <p class="text-muted small mb-0">
+                                Revise perfiles, precios de referencia, experiencia y disponibilidad.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <div class="step-dot">3</div>
+                        <div>
+                            <h3 class="h6 fw-bold mb-1">Solicite y dé seguimiento</h3>
+                            <p class="text-muted small mb-0">
+                                Registre la solicitud y consulte el avance desde su panel.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -42,16 +100,24 @@
 
 <main class="container my-5">
     <section class="mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2 class="h4 fw-bold text-primary-hs">Categorías populares</h2>
-            <a class="text-decoration-none" th:href="@{/servicios/resultados}">Ver todos</a>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-2 mb-4">
+            <div>
+                <span class="section-kicker mb-2">Catálogo</span>
+                <h2 class="section-title h3 mb-1">Categorías populares</h2>
+                <p class="text-muted mb-0">Explore las áreas de servicio disponibles en la plataforma.</p>
+            </div>
+            <a class="btn btn-outline-primary-hs btn-sm" th:href="@{/servicios/resultados}">
+                Ver todos
+            </a>
         </div>
+
         <div class="row g-3">
             <div class="col-6 col-md-4 col-lg-2" th:each="categoria : ${categorias}">
-                <a class="card categoria-card text-center text-decoration-none h-100" th:href="@{/servicios/resultados(categoriaId=${categoria.idCategoria})}">
-                    <div class="card-body">
-                        <div class="icono-categoria mx-auto mb-2">⌂</div>
-                        <span class="fw-semibold text-primary-hs" th:text="${categoria.nombre}">Plomería</span>
+                <a class="card categoria-card text-center text-decoration-none h-100"
+                   th:href="@{/servicios/resultados(categoriaId=${categoria.idCategoria})}">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <div class="icono-categoria mx-auto mb-3">⌂</div>
+                        <span class="fw-bold text-primary-hs" th:text="${categoria.nombre}">Plomería</span>
                     </div>
                 </a>
             </div>
@@ -59,19 +125,59 @@
     </section>
 
     <section>
-        <h2 class="h4 fw-bold text-primary-hs mb-3">Servicios destacados</h2>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-2 mb-4">
+            <div>
+                <span class="section-kicker mb-2">Servicios activos</span>
+                <h2 class="section-title h3 mb-1">Servicios destacados</h2>
+                <p class="text-muted mb-0">
+                    Una muestra de los servicios disponibles para solicitud inmediata.
+                </p>
+            </div>
+            <a class="btn btn-outline-primary-hs btn-sm" th:href="@{/servicios/resultados}">
+                Buscar más servicios
+            </a>
+        </div>
+
         <div class="row g-4">
             <div class="col-md-6 col-lg-4" th:each="servicio : ${serviciosDestacados}">
-                <div class="card h-100 shadow-sm border-0 rounded-4">
-                    <div class="card-body">
-                        <span class="badge bg-info-soft text-primary-hs" th:text="${servicio.categoria.nombre}">Categoría</span>
-                        <h5 class="mt-3 fw-bold" th:text="${servicio.nombre}">Servicio</h5>
-                        <p class="text-muted small" th:text="${servicio.descripcion}">Descripción</p>
-                        <p class="mb-1"><strong th:text="${servicio.proveedor.nombre}">Proveedor</strong></p>
-                        <p class="text-muted small mb-3" th:text="${servicio.proveedor.ubicacion}">Ubicación</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold text-primary-hs" th:text="'Desde ₡' + ${servicio.precioReferencia}">Desde ₡20000</span>
-                            <a class="btn btn-outline-primary-hs btn-sm" th:href="@{/servicios/proveedor/{id}(id=${servicio.proveedor.idProveedor})}">Ver perfil</a>
+                <div class="card service-card h-100">
+                    <div class="card-body p-4">
+                        <span class="badge bg-info-soft text-primary-hs mb-3"
+                              th:text="${servicio.categoria.nombre}">
+                            Categoría
+                        </span>
+
+                        <h3 class="h5 fw-bold text-primary-hs mb-2" th:text="${servicio.nombre}">
+                            Servicio
+                        </h3>
+
+                        <p class="text-muted small mb-4" th:text="${servicio.descripcion}">
+                            Descripción
+                        </p>
+
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="avatar-proveedor">
+                                <span th:text="${#strings.substring(servicio.proveedor.nombre,0,1)}">P</span>
+                            </div>
+                            <div>
+                                <p class="fw-bold mb-0" th:text="${servicio.proveedor.nombre}">
+                                    Proveedor
+                                </p>
+                                <p class="text-muted small mb-0" th:text="${servicio.proveedor.ubicacion}">
+                                    Ubicación
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <span class="fw-bold text-primary-hs"
+                                  th:text="'Desde ₡' + ${servicio.precioReferencia}">
+                                Desde ₡20000
+                            </span>
+                            <a class="btn btn-outline-primary-hs btn-sm"
+                               th:href="@{/servicios/proveedor/{id}(id=${servicio.proveedor.idProveedor})}">
+                                Ver perfil
+                            </a>
                         </div>
                     </div>
                 </div>
