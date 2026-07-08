@@ -15,13 +15,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/proveedor")
 public class ProveedorController {
+
     private final ProveedorService proveedorService;
     private final SolicitudService solicitudService;
     private final ServicioService servicioService;
     private final CategoriaService categoriaService;
 
-    public ProveedorController(ProveedorService proveedorService, SolicitudService solicitudService,
-                               ServicioService servicioService, CategoriaService categoriaService) {
+    public ProveedorController(ProveedorService proveedorService,
+                               SolicitudService solicitudService,
+                               ServicioService servicioService,
+                               CategoriaService categoriaService) {
         this.proveedorService = proveedorService;
         this.solicitudService = solicitudService;
         this.servicioService = servicioService;
@@ -32,9 +35,12 @@ public class ProveedorController {
     public String panel(Model model) {
         var proveedores = proveedorService.listarTodos();
         var proveedor = proveedores.isEmpty() ? null : proveedores.get(0);
+
         model.addAttribute("proveedor", proveedor);
-        model.addAttribute("solicitudes", proveedor == null ? java.util.List.of() : solicitudService.listarPorProveedor(proveedor.getIdProveedor()));
+        model.addAttribute("solicitudes", proveedor == null ? java.util.List.of() : solicitudService.listarPendientesPorProveedor(proveedor.getIdProveedor()));
+        model.addAttribute("solicitudesNuevas", proveedor == null ? 0 : solicitudService.contarPendientesPorProveedor(proveedor.getIdProveedor()));
         model.addAttribute("servicios", servicioService.listarActivos());
+
         return "proveedor/panel-proveedor";
     }
 
@@ -47,7 +53,9 @@ public class ProveedorController {
     }
 
     @PostMapping("/servicios/guardar")
-    public String guardarServicio(Servicio servicio, Long idCategoria, Long idProveedor,
+    public String guardarServicio(Servicio servicio,
+                                  Long idCategoria,
+                                  Long idProveedor,
                                   RedirectAttributes redirectAttributes) {
         servicio.setCategoria(categoriaService.obtener(idCategoria));
         servicio.setProveedor(proveedorService.obtener(idProveedor));

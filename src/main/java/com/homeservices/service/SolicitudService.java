@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SolicitudService {
+
     private final SolicitudRepository solicitudRepository;
 
     public SolicitudService(SolicitudRepository solicitudRepository) {
@@ -27,6 +28,16 @@ public class SolicitudService {
     @Transactional(readOnly = true)
     public List<Solicitud> listarPorProveedor(Long idProveedor) {
         return solicitudRepository.findByProveedorIdProveedorOrderByFechaCreacionDesc(idProveedor);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Solicitud> listarPendientesPorProveedor(Long idProveedor) {
+        return solicitudRepository.findByProveedorIdProveedorAndEstadoOrderByFechaCreacionDesc(idProveedor, "PENDIENTE");
+    }
+
+    @Transactional(readOnly = true)
+    public long contarPendientesPorProveedor(Long idProveedor) {
+        return solicitudRepository.countByProveedorIdProveedorAndEstado(idProveedor, "PENDIENTE");
     }
 
     @Transactional(readOnly = true)
