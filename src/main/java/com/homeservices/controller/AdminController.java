@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
     private final UsuarioService usuarioService;
     private final CategoriaService categoriaService;
     private final ProveedorService proveedorService;
@@ -24,8 +25,8 @@ public class AdminController {
     private final CalificacionService calificacionService;
 
     public AdminController(UsuarioService usuarioService, CategoriaService categoriaService,
-                           ProveedorService proveedorService, SolicitudService solicitudService,
-                           CalificacionService calificacionService) {
+            ProveedorService proveedorService, SolicitudService solicitudService,
+            CalificacionService calificacionService) {
         this.usuarioService = usuarioService;
         this.categoriaService = categoriaService;
         this.proveedorService = proveedorService;
@@ -61,5 +62,29 @@ public class AdminController {
         categoriaService.desactivar(id);
         redirectAttributes.addFlashAttribute("mensaje", "La categoría fue desactivada.");
         return "redirect:/admin/categorias";
+    }
+
+    @GetMapping("/usuarios")
+    public String usuarios(Model model) {
+        model.addAttribute("usuarios", usuarioService.listarTodos());
+        return "admin/usuarios";
+    }
+
+    @GetMapping("/proveedores")
+    public String proveedores(Model model) {
+        model.addAttribute("proveedores", proveedorService.listarTodos());
+        return "admin/proveedores";
+    }
+
+    @GetMapping("/solicitudes")
+    public String solicitudes(Model model) {
+        model.addAttribute("solicitudes", solicitudService.listarTodas());
+        return "admin/solicitudes";
+    }
+
+    @GetMapping("/reportes")
+    public String reportes(Model model) {
+        model.addAttribute("comentariosReportados", calificacionService.listarReportadas());
+        return "admin/reportes";
     }
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: head('Comentarios reportados')}"></head>
+    <body>
+        <header th:replace="~{fragmentos :: header}"></header>
+        <div th:replace="~{fragmentos :: mensajes}"></div>
+        <main class="container my-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 fw-bold text-primary-hs mb-1">Comentarios reportados</h1>
+                    <p class="text-muted mb-0">Comentarios marcados para revisión administrativa.</p>
+                </div>
+                <a class="btn btn-primary-hs" th:href="@{/admin/panel}">Volver al panel</a>
+            </div>
+            <section class="mt-5" id="reportes">
+                <h2 class="h5 fw-bold text-primary-hs">Usuarios registrados</h2>
+                <div class="table-responsive card border-0 shadow-sm rounded-4 p-3">
+                    <table class="table align-middle mb-0">
+                        <thead><tr><th>Id</th><th>Proveedor</th><th>Puntaje</th><th>Comentario</th><th>Verificado</th><th>Fecha</th><</tr></thead>
+                        <tbody>
+
+                            <tr th:if="${#lists.isEmpty(comentariosReportados)}">
+                                <td colspan="6" class="text-center text-muted">
+                                    No hay comentarios reportados por revisar.
+                                </td>
+                            </tr>
+
+                            <tr th:each="calificacion : ${comentariosReportados}">
+
+                                <td th:text="${calificacion.idCalificacion}">1</td>
+
+                                <td th:text="${calificacion.solicitud.proveedor.nombre}">
+                                    Proveedor
+                                </td>
+
+                                <td th:text="${calificacion.puntaje}">
+                                    5
+                                </td>
+
+                                <td th:text="${calificacion.comentario}">
+                                    Comentario
+                                </td>
+
+                                <td>
+                                    <span class="badge"
+                                          th:classappend="${calificacion.verificado} ? ' bg-success' : ' bg-warning'"
+                                          th:text="${calificacion.verificado} ? 'Sí' : 'Pendiente'">
+                                        Sí
+                                    </span>
+                                </td>
+
+                                <td th:text="${calificacion.fechaCreacion}">
+                                    Fecha
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <footer th:replace="~{fragmentos :: footer}"></footer>
+    </body>
+</html>
