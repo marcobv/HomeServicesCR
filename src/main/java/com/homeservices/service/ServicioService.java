@@ -42,4 +42,10 @@ public class ServicioService {
         }
         return servicioRepository.save(servicio);
     }
+    //denisse
+    @Transactional(readOnly = true)
+    public List<Servicio> listarPorProveedor(Long idProveedor) {
+        return servicioRepository
+            .findByProveedorIdProveedorAndActivoTrueOrderByNombreAsc(idProveedor);
+    }
 }

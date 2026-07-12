@@ -11,7 +11,8 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long> {
 
     List<Servicio> findByActivoTrueOrderByNombreAsc();
     List<Servicio> findTop6ByActivoTrueOrderByProveedorCalificacionPromedioDesc();
-
+//Denisse
+    List<Servicio> findByProveedorIdProveedorAndActivoTrueOrderByNombreAsc(Long idProveedor);
     @Query("SELECT s FROM Servicio s " +
            "WHERE s.activo = true " +
            "AND (:texto IS NULL OR :texto = '' OR LOWER(s.nombre) LIKE LOWER(CONCAT('%', :texto, '%')) " +
