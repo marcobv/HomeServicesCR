@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{fragmentos :: head('Proveedores registrados')}"></head>
+    <body>
+        <header th:replace="~{fragmentos :: header}"></header>
+        <div th:replace="~{fragmentos :: mensajes}"></div>
+        <main class="container my-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 fw-bold text-primary-hs mb-1">Proveedores registrados</h1>
+                    <p class="text-muted mb-0">Consulta general de proveedores de servicios registrados en HomeServices CR.</p>
+                </div>
+                <a class="btn btn-primary-hs" th:href="@{/admin/panel}">Volver al panel</a>
+            </div>
+            <section class="mt-5" id="proveedores">
+                <h2 class="h5 fw-bold text-primary-hs">Usuarios registrados</h2>
+                <div class="table-responsive card border-0 shadow-sm rounded-4 p-3">
+                    <table class="table align-middle mb-0">
+                        <thead><tr><th>Nombre</th><th>Especialidad</th><th>Ubicación</th><th>Calificación</th><th>Verificado</th></tr></thead>
+                        <tbody>
+                            <tr th:each="proveedor : ${proveedores}">
+                                <td th:text="${proveedor.nombre}">Nombre</td>
+
+                                <td th:text="${proveedor.especialidad}">Especialidad</td>
+
+                                <td th:text="${proveedor.ubicacion}">Ubicación</td>
+
+                                <td th:text="${proveedor.calificacionPromedio}">0.0</td>
+
+                                <td>
+                                    <span class="badge"
+                                          th:classappend="${proveedor.verificado} ? ' bg-success' : ' bg-warning'"
+                                          th:text="${proveedor.verificado} ? 'Sí' : 'Pendiente'">
+                                        Sí
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <footer th:replace="~{fragmentos :: footer}"></footer>
+    </body>
+</html>
