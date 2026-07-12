@@ -48,6 +48,8 @@ public class ServicioController {
         model.addAttribute("proveedor", proveedorService.obtener(idProveedor));
         model.addAttribute("disponibilidades", proveedorService.obtenerDisponibilidad(idProveedor));
         model.addAttribute("calificaciones", calificacionService.listarPorProveedor(idProveedor));
+        model.addAttribute("servicios",//denisse
+        servicioService.listarPorProveedor(idProveedor));
         return "servicio/perfil-proveedor";
     }
 }

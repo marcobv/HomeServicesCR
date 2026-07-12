@@ -46,7 +46,11 @@
                     <p class="fw-bold" th:text="${servicio.proveedor.nombre}">Proveedor</p>
                     <p class="mb-1 text-muted">Tarifa estimada</p>
                     <p class="fw-bold text-primary-hs" th:text="'Desde ₡' + ${servicio.precioReferencia}">Desde ₡20000</p>
-                    <span class="badge bg-warning text-dark">Pendiente</span>
+                    <span class="badge bg-warning text-dark">Pendiente</span> <!-- Denisse -->
+                    <p class="mb-1 text-muted">Categoría</p>
+                    <p class="fw-bold"
+                     th:text="${servicio.categoria.nombre}">
+                    </p>             
                 </div>
             </div>
         </aside>
