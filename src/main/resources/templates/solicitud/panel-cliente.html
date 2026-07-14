@@ -1,37 +1,119 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragmentos :: head('Panel cliente')}"></head>
+
 <body>
 <header th:replace="~{fragmentos :: header}"></header>
 <div th:replace="~{fragmentos :: mensajes}"></div>
+
 <main class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 fw-bold text-primary-hs mb-1">Mi cuenta</h1>
-            <p class="text-muted mb-0" th:text="'Bienvenido(a), ' + ${cliente.nombreCompleto}">Bienvenido(a)</p>
+            <p class="text-muted mb-0" th:text="'Bienvenido(a), ' + ${cliente.nombreCompleto}">
+                Bienvenido(a)
+            </p>
         </div>
-        <a class="btn btn-accent-hs" th:href="@{/servicios/resultados}">Buscar servicio</a>
+
+        <a class="btn btn-accent-hs" th:href="@{/servicios/resultados}">
+            Buscar servicio
+        </a>
     </div>
+
     <div class="row g-3 mb-4">
-        <div class="col-md-4"><div class="card metric-card"><div class="card-body"><span>Solicitudes activas</span><strong th:text="${#lists.size(solicitudes)}">0</strong></div></div></div>
-        <div class="col-md-4"><div class="card metric-card"><div class="card-body"><span>Servicios completados</span><strong>0</strong></div></div></div>
-        <div class="col-md-4"><div class="card metric-card"><div class="card-body"><span>Pendientes de calificar</span><strong>1</strong></div></div></div>
+        <div class="col-md-4">
+            <div class="card metric-card">
+                <div class="card-body">
+                    <span>Solicitudes activas</span>
+                    <strong th:text="${solicitudesActivas}">0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card metric-card">
+                <div class="card-body">
+                    <span>Servicios completados</span>
+                    <strong th:text="${serviciosCompletados}">0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card metric-card">
+                <div class="card-body">
+                    <span>Pendientes de calificar</span>
+                    <strong th:text="${pendientesCalificar}">0</strong>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body p-4">
             <h2 class="h5 fw-bold text-primary-hs mb-3">Solicitudes recientes</h2>
-            <div th:if="${#lists.isEmpty(solicitudes)}" class="alert alert-info">No hay solicitudes registradas todavía.</div>
+
+            <div th:if="${#lists.isEmpty(solicitudes)}" class="alert alert-info">
+                No hay solicitudes registradas todavía.
+            </div>
+
             <div class="table-responsive" th:if="${!#lists.isEmpty(solicitudes)}">
                 <table class="table align-middle">
-                    <thead><tr><th>Servicio</th><th>Proveedor</th><th>Fecha</th><th>Estado</th><th></th></tr></thead>
+                    <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Proveedor</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th class="text-end">Acción</th>
+                    </tr>
+                    </thead>
+
                     <tbody>
                     <tr th:each="solicitud : ${solicitudes}">
                         <td th:text="${solicitud.servicio.nombre}">Electricidad</td>
                         <td th:text="${solicitud.proveedor.nombre}">Proveedor</td>
                         <td th:text="${solicitud.fechaServicio}">2026-07-10</td>
-                        <td><span class="badge estado" th:text="${solicitud.estado}">Pendiente</span></td>
+
+                        <td>
+                            <span class="badge estado" th:text="${solicitud.estado}">
+                                Pendiente
+                            </span>
+                        </td>
+
                         <td class="text-end">
-                            <a class="btn btn-outline-primary-hs btn-sm" th:href="@{/solicitudes/{id}/calificar(id=${solicitud.idSolicitud})}">Calificar</a>
+
+                            <!-- 
+                                Solo se puede calificar si:
+                                1. La solicitud está FINALIZADA.
+                                2. Todavía no tiene calificación registrada.
+                            -->
+                            <a class="btn btn-outline-primary-hs btn-sm"
+                               th:if="${solicitud.estado == 'FINALIZADA' and !solicitudesCalificadas.contains(solicitud.idSolicitud)}"
+                               th:href="@{/solicitudes/{id}/calificar(id=${solicitud.idSolicitud})}">
+                                Calificar
+                            </a>
+
+                            <!-- 
+                                Se muestra como Calificada únicamente si:
+                                1. La solicitud está FINALIZADA.
+                                2. Ya existe una calificación para esa solicitud.
+                            -->
+                            <span class="badge bg-success"
+                                  th:if="${solicitud.estado == 'FINALIZADA' and solicitudesCalificadas.contains(solicitud.idSolicitud)}">
+                                Calificada
+                            </span>
+
+                            <!-- 
+                                Si todavía está PENDIENTE, ACEPTADA u otro estado no finalizado,
+                                no se permite calificar todavía.
+                            -->
+                            <span class="text-muted small"
+                                  th:if="${solicitud.estado != 'FINALIZADA'}">
+                                Disponible al finalizar
+                            </span>
+
                         </td>
                     </tr>
                     </tbody>
@@ -40,6 +122,7 @@
         </div>
     </div>
 </main>
+
 <footer th:replace="~{fragmentos :: footer}"></footer>
 </body>
 </html>
