@@ -18,7 +18,12 @@
                     <table class="table align-middle mb-0">
                         <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Teléfono</th><th>Ubicación</th><th>Estado</th></tr></thead>
                         <tbody>
-                            <tr th:each="usuario : ${usuarios}">
+                            <tr th:if="${#lists.isEmpty(usuarios)}">
+                                <td colspan="6" class=""text-center text-muted py-4">
+                                    No hay usuarios registrados en la plataforma
+                                </td>
+                            </tr>
+                            <tr th:each="usuario : ${usuarios}"></tr>
                                 <td th:text="${usuario.nombreCompleto}">Nombre</td>
 
                                 <td th:text="${usuario.correo}">Correo</td>
