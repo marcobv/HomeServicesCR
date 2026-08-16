@@ -15,4 +15,6 @@ COPY --from=build /app/target/*.jar app.jar
 
 ENV JAVA_OPTS="-Xmx384m"
 
-CMD ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar app.jar"]
+EXPOSE 10000
+
+CMD ["sh", "-c", "java $JAVA_OPTS -Dserver.address=0.0.0.0 -Dserver.port=${PORT:-8080} -jar app.jar"]
