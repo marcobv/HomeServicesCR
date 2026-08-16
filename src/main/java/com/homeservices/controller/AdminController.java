@@ -64,6 +64,13 @@ public class AdminController {
         return "redirect:/admin/categorias";
     }
 
+    @GetMapping("/categorias/reactivar/{id}")
+    public String reactivarCategoria(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        categoriaService.reactivar(id);
+        redirectAttributes.addFlashAttribute("mensaje", "La categoría fue reactivada.");
+        return "redirect:/admin/categorias";
+    }
+
     @GetMapping("/usuarios")
     public String usuarios(Model model) {
         model.addAttribute("usuarios", usuarioService.listarTodos());

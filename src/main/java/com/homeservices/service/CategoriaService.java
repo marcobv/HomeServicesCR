@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoriaService {
+
     private final CategoriaRepository categoriaRepository;
 
     public CategoriaService(CategoriaRepository categoriaRepository) {
@@ -38,6 +39,14 @@ public class CategoriaService {
     public void desactivar(Long id) {
         categoriaRepository.findById(id).ifPresent(categoria -> {
             categoria.setActivo(false);
+            categoriaRepository.save(categoria);
+        });
+    }
+
+    @Transactional
+    public void reactivar(Long id) {
+        categoriaRepository.findById(id).ifPresent(categoria -> {
+            categoria.setActivo(true);
             categoriaRepository.save(categoria);
         });
     }

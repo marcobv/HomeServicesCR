@@ -40,7 +40,18 @@
                                 <td th:text="${categoria.nombre}">Categoría</td>
                                 <td th:text="${categoria.descripcion}">Descripción</td>
                                 <td><span class="badge" th:classappend="${categoria.activo ? ' bg-success' : ' bg-secondary'}" th:text="${categoria.activo ? 'Activa' : 'Inactiva'}">Activa</span></td>
-                                <td class="text-end"><a class="btn btn-outline-danger btn-sm" th:href="@{/admin/categorias/desactivar/{id}(id=${categoria.idCategoria})}">Desactivar</a></td>
+                                <td class="text-end">
+    <a th:if="${categoria.activo}"
+       class="btn btn-outline-danger btn-sm"
+       th:href="@{/admin/categorias/desactivar/{id}(id=${categoria.idCategoria})}">
+        Desactivar
+    </a>
+    <a th:unless="${categoria.activo}"
+       class="btn btn-outline-success btn-sm"
+       th:href="@{/admin/categorias/reactivar/{id}(id=${categoria.idCategoria})}">
+        Reactivar
+    </a>
+</td>
                             </tr>
                             </tbody>
                         </table>
