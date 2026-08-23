@@ -9,8 +9,9 @@
         <section class="col-lg-4">
             <div class="card border-0 shadow rounded-4">
                 <div class="card-body p-4">
-                    <h1 class="h4 fw-bold text-primary-hs mb-3">Nueva categoría</h1>
+                    <h1 class="h4 fw-bold text-primary-hs mb-3" th:text="${categoria.idCategoria == null ? 'Nueva categoría' : 'Editar categoría'}">Nueva categoría</h1>
                     <form th:action="@{/admin/categorias/guardar}" th:object="${categoria}" method="post">
+                        <input type="hidden" th:field="*{idCategoria}"/>
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
                             <input th:field="*{nombre}" class="form-control" required/>
@@ -40,18 +41,11 @@
                                 <td th:text="${categoria.nombre}">Categoría</td>
                                 <td th:text="${categoria.descripcion}">Descripción</td>
                                 <td><span class="badge" th:classappend="${categoria.activo ? ' bg-success' : ' bg-secondary'}" th:text="${categoria.activo ? 'Activa' : 'Inactiva'}">Activa</span></td>
-                                <td class="text-end">
-    <a th:if="${categoria.activo}"
-       class="btn btn-outline-danger btn-sm"
-       th:href="@{/admin/categorias/desactivar/{id}(id=${categoria.idCategoria})}">
-        Desactivar
-    </a>
-    <a th:unless="${categoria.activo}"
-       class="btn btn-outline-success btn-sm"
-       th:href="@{/admin/categorias/reactivar/{id}(id=${categoria.idCategoria})}">
-        Reactivar
-    </a>
-</td>
+                                <td class="text-end d-flex justify-content-end gap-2">
+                                    <a class="btn btn-outline-primary-hs btn-sm" th:href="@{/admin/categorias/{id}/editar(id=${categoria.idCategoria})}">Editar</a>
+                                    <form th:if="${categoria.activo}" method="post" th:action="@{/admin/categorias/desactivar/{id}(id=${categoria.idCategoria})}"><button class="btn btn-outline-danger btn-sm" type="submit">Desactivar</button></form>
+                                    <form th:unless="${categoria.activo}" method="post" th:action="@{/admin/categorias/reactivar/{id}(id=${categoria.idCategoria})}"><button class="btn btn-outline-success btn-sm" type="submit">Reactivar</button></form>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -28,7 +28,16 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Precio máximo</label>
-                            <input class="form-control" type="number" name="precioMax" th:value="${precioMax}" placeholder="30000"/>
+                            <input class="form-control" type="number" min="0" step="100" name="precioMax" th:value="${precioMax}" placeholder="30000"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Calificación mínima</label>
+                            <select class="form-select" name="calificacionMin">
+                                <option value="">Todas</option>
+                                <option value="3" th:selected="${calificacionMin == 3}">3 o más</option>
+                                <option value="4" th:selected="${calificacionMin == 4}">4 o más</option>
+                                <option value="4.5" th:selected="${calificacionMin == 4.5}">4.5 o más</option>
+                            </select>
                         </div>
                         <button class="btn btn-primary-hs w-100" type="submit">Aplicar filtros</button>
                         <a class="btn btn-outline-secondary w-100 mt-2" th:href="@{/servicios/resultados}">Limpiar</a>

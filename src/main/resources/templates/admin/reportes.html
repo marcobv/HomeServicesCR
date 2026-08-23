@@ -16,11 +16,11 @@
                 <h2 class="h5 fw-bold text-primary-hs">Comentarios registrados</h2>
                 <div class="table-responsive card border-0 shadow-sm rounded-4 p-3">
                     <table class="table align-middle mb-0">
-                        <thead><tr><th>Id</th><th>Proveedor</th><th>Puntaje</th><th>Comentario</th><th>Verificado</th><th>Fecha</th></tr></thead>
+                        <thead><tr><th>Id</th><th>Proveedor</th><th>Puntaje</th><th>Comentario</th><th>Verificado</th><th>Fecha</th><th>Acciones</th></tr></thead>
                         <tbody>
 
                             <tr th:if="${#lists.isEmpty(comentariosReportados)}">
-                                <td colspan="6" class="text-center text-muted">
+                                <td colspan="7" class="text-center text-muted">
                                     No hay comentarios reportados por revisar.
                                 </td>
                             </tr>
@@ -51,6 +51,17 @@
 
                                 <td th:text="${calificacion.fechaCreacion}">
                                     Fecha
+                                </td>
+
+                                <td class="d-flex gap-2">
+                                    <form th:action="@{/admin/reportes/{id}/resolver(id=${calificacion.idCalificacion})}" method="post">
+                                        <input type="hidden" name="ocultar" value="false"/>
+                                        <button class="btn btn-outline-success btn-sm" type="submit">Conservar</button>
+                                    </form>
+                                    <form th:action="@{/admin/reportes/{id}/resolver(id=${calificacion.idCalificacion})}" method="post">
+                                        <input type="hidden" name="ocultar" value="true"/>
+                                        <button class="btn btn-outline-danger btn-sm" type="submit">Ocultar</button>
+                                    </form>
                                 </td>
 
                             </tr>

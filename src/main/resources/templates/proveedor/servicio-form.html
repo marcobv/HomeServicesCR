@@ -9,28 +9,24 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow rounded-4">
                 <div class="card-body p-4">
-                    <h1 class="h3 fw-bold text-primary-hs mb-3">Publicar servicio</h1>
+                    <h1 class="h3 fw-bold text-primary-hs mb-3" th:text="${servicio.idServicio == null ? 'Publicar servicio' : 'Editar servicio'}">Publicar servicio</h1>
                     <form th:action="@{/proveedor/servicios/guardar}" th:object="${servicio}" method="post" class="row g-3">
+                        <input type="hidden" th:field="*{idServicio}"/>
                         <div class="col-md-6">
                             <label class="form-label">Nombre del servicio</label>
                             <input th:field="*{nombre}" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Precio de referencia</label>
-                            <input th:field="*{precioReferencia}" type="number" class="form-control" required/>
+                            <input th:field="*{precioReferencia}" type="number" min="1" step="100" class="form-control" required/>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Categoría</label>
                             <select name="idCategoria" class="form-select" required>
                                 <option value="">Seleccione</option>
-                                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombre}"></option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Proveedor</label>
-                            <select name="idProveedor" class="form-select" required>
-                                <option value="">Seleccione</option>
-                                <option th:each="proveedor : ${proveedores}" th:value="${proveedor.idProveedor}" th:text="${proveedor.nombre}"></option>
+                                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}"
+                                        th:selected="${servicio.categoria != null and servicio.categoria.idCategoria == categoria.idCategoria}"
+                                        th:text="${categoria.nombre}"></option>
                             </select>
                         </div>
                         <div class="col-12">

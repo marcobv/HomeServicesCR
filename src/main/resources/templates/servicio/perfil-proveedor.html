@@ -99,6 +99,13 @@
                         <span class="rating" th:text="'★ ' + ${calificacion.puntaje}">★ 5</span>
                         <span class="badge bg-success ms-2" th:if="${calificacion.verificado}">Verificado</span>
                         <p class="mt-2 mb-0" th:text="${calificacion.comentario}">Excelente servicio.</p>
+                        <form class="mt-3"
+                              th:if="${sesionUsuarioRol == 'CLIENTE' and !calificacion.reportado}"
+                              th:action="@{/solicitudes/calificaciones/{id}/reportar(id=${calificacion.idCalificacion})}"
+                              method="post">
+                            <input type="hidden" name="idProveedor" th:value="${proveedor.idProveedor}"/>
+                            <button class="btn btn-outline-danger btn-sm" type="submit">Reportar comentario</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -1,52 +1,37 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{fragmentos :: head('Usuarios registrados')}"></head>
-    <body>
-        <header th:replace="~{fragmentos :: header}"></header>
-        <div th:replace="~{fragmentos :: mensajes}"></div>
-        <main class="container my-5">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h1 class="h3 fw-bold text-primary-hs mb-1">Usuarios registrados</h1>
-                    <p class="text-muted mb-0">Consulta de cuentas registradas en la plataforma.</p>
-                </div>
-                <a class="btn btn-primary-hs" th:href="@{/admin/panel}">Volver al panel</a>
-            </div>
-            <section class="mt-5" id="usuarios">
-                <h2 class="h5 fw-bold text-primary-hs">Usuarios registrados</h2>
-                <div class="table-responsive card border-0 shadow-sm rounded-4 p-3">
-                    <table class="table align-middle mb-0">
-                        <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Teléfono</th><th>Ubicación</th><th>Estado</th></tr></thead>
-                        <tbody>
-                            <tr th:if="${#lists.isEmpty(usuarios)}">
-                                <td colspan="6" class=""text-center text-muted py-4">
-                                    No hay usuarios registrados en la plataforma
-                                </td>
-                            </tr>
-                            <tr th:each="usuario : ${usuarios}"></tr>
-                                <td th:text="${usuario.nombreCompleto}">Nombre</td>
-
-                                <td th:text="${usuario.correo}">Correo</td>
-
-                                <td th:text="${usuario.rol}">Rol</td>
-
-                                <td th:text="${usuario.telefono}">Teléfono</td>
-
-                                <td th:text="${usuario.ubicacion}">Ubicación</td>
-
-                                <td>
-                                    <span class="badge"
-                                          th:classappend="${usuario.activo} ? ' bg-success' : ' bg-danger'"
-                                          th:text="${usuario.activo} ? 'Activo' : 'Inactivo'">
-                                        Activo
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </main>
-        <footer th:replace="~{fragmentos :: footer}"></footer>
-    </body>
+<head th:replace="~{fragmentos :: head('Usuarios registrados')}"></head>
+<body>
+<header th:replace="~{fragmentos :: header}"></header>
+<div th:replace="~{fragmentos :: mensajes}"></div>
+<main class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div><h1 class="h3 fw-bold text-primary-hs mb-1">Usuarios registrados</h1><p class="text-muted mb-0">Gestión de cuentas y acceso a la plataforma.</p></div>
+        <a class="btn btn-primary-hs" th:href="@{/admin/panel}">Volver al panel</a>
+    </div>
+    <div class="table-responsive card border-0 shadow-sm rounded-4 p-3">
+        <table class="table align-middle mb-0">
+            <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Teléfono</th><th>Ubicación</th><th>Estado</th><th>Acción</th></tr></thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(usuarios)}"><td colspan="7" class="text-center text-muted py-4">No hay usuarios registrados.</td></tr>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.nombreCompleto}">Nombre</td>
+                <td th:text="${usuario.correo}">Correo</td>
+                <td th:text="${usuario.rol}">Rol</td>
+                <td th:text="${usuario.telefono}">Teléfono</td>
+                <td th:text="${usuario.ubicacion}">Ubicación</td>
+                <td><span class="badge" th:classappend="${usuario.activo ? ' bg-success' : ' bg-danger'}" th:text="${usuario.activo ? 'Activo' : 'Inactivo'}">Estado</span></td>
+                <td>
+                    <form th:if="${usuario.idUsuario != sesionUsuarioId}" th:action="@{/admin/usuarios/{id}/estado(id=${usuario.idUsuario})}" method="post">
+                        <button class="btn btn-sm" th:classappend="${usuario.activo ? ' btn-outline-danger' : ' btn-outline-success'}" type="submit" th:text="${usuario.activo ? 'Desactivar' : 'Activar'}">Cambiar</button>
+                    </form>
+                    <span th:if="${usuario.idUsuario == sesionUsuarioId}" class="text-muted small">Sesión actual</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer th:replace="~{fragmentos :: footer}"></footer>
+</body>
 </html>

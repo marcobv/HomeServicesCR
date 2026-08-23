@@ -33,13 +33,23 @@ public class ServicioController {
                              @RequestParam(required = false) Long categoriaId,
                              @RequestParam(required = false) String ubicacion,
                              @RequestParam(required = false) BigDecimal precioMax,
+                             @RequestParam(required = false) Double calificacionMin,
                              Model model) {
-        model.addAttribute("servicios", servicioService.buscar(texto, categoriaId, ubicacion, precioMax));
+        if (precioMax != null && precioMax.signum() < 0) {
+            precioMax = null;
+            model.addAttribute("error", "El precio máximo no puede ser negativo.");
+        }
+        if (calificacionMin != null && (calificacionMin < 0 || calificacionMin > 5)) {
+            calificacionMin = null;
+            model.addAttribute("error", "La calificación debe estar entre 0 y 5.");
+        }
+        model.addAttribute("servicios", servicioService.buscar(texto, categoriaId, ubicacion, precioMax, calificacionMin));
         model.addAttribute("categorias", categoriaService.listarActivas());
         model.addAttribute("texto", texto);
         model.addAttribute("categoriaId", categoriaId);
         model.addAttribute("ubicacion", ubicacion);
         model.addAttribute("precioMax", precioMax);
+        model.addAttribute("calificacionMin", calificacionMin);
         return "servicio/resultados";
     }
 

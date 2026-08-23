@@ -37,17 +37,25 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/servicios/resultados}">Servicios</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${sesionUsuarioRol == 'CLIENTE'}">
                         <a class="nav-link" th:href="@{/cliente/panel}">Panel cliente</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${sesionUsuarioRol == 'PROVEEDOR'}">
                         <a class="nav-link" th:href="@{/proveedor/panel}">Panel proveedor</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${sesionUsuarioRol == 'ADMIN'}">
                         <a class="nav-link" th:href="@{/admin/panel}">Admin</a>
                     </li>
-                    <li class="nav-item ms-lg-3">
+                    <li class="nav-item" th:if="${sesionUsuarioId != null}">
+                        <a class="nav-link" th:href="@{/usuarios/perfil}" th:text="${sesionUsuarioNombre}">Mi perfil</a>
+                    </li>
+                    <li class="nav-item ms-lg-3" th:if="${sesionUsuarioId == null}">
                         <a class="btn btn-accent-hs btn-sm px-3" th:href="@{/usuarios/login}">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item ms-lg-3" th:if="${sesionUsuarioId != null}">
+                        <form th:action="@{/usuarios/logout}" method="post">
+                            <button class="btn btn-accent-hs btn-sm px-3" type="submit">Cerrar sesión</button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -75,7 +83,7 @@
                 <span class="ms-1">· Plataforma universitaria de servicios para el hogar</span>
             </div>
             <div>
-                Segundo avance · Grupo 11 · Universidad Fidélitas
+                Proyecto final · Grupo 11 · Universidad Fidélitas
             </div>
         </div>
     </div>

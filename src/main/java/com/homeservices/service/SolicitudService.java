@@ -41,8 +41,23 @@ public class SolicitudService {
     }
 
     @Transactional(readOnly = true)
+    public boolean horarioOcupado(Long idProveedor, java.time.LocalDate fecha, java.time.LocalTime hora) {
+        return solicitudRepository.existsByProveedorIdProveedorAndFechaServicioAndHoraServicioAndEstadoIn(
+                idProveedor, fecha, hora, List.of("PENDIENTE", "ACEPTADA"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Solicitud> listarHorariosOcupados(Long idProveedor,
+                                                  java.time.LocalDate fechaInicio,
+                                                  java.time.LocalDate fechaFin) {
+        return solicitudRepository.findByProveedorIdProveedorAndFechaServicioBetweenAndEstadoIn(
+                idProveedor, fechaInicio, fechaFin, List.of("PENDIENTE", "ACEPTADA"));
+    }
+
+    @Transactional(readOnly = true)
     public Solicitud obtener(Long id) {
-        return solicitudRepository.findById(id).orElse(new Solicitud());
+        return solicitudRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("La solicitud indicada no existe."));
     }
 
     @Transactional
@@ -54,10 +69,20 @@ public class SolicitudService {
     }
 
     @Transactional
-    public void actualizarEstado(Long idSolicitud, String estado) {
-        solicitudRepository.findById(idSolicitud).ifPresent(solicitud -> {
-            solicitud.setEstado(estado);
-            solicitudRepository.save(solicitud);
-        });
+    public void actualizarEstado(Long idSolicitud, Long idProveedor, String estado) {
+        Solicitud solicitud = obtener(idSolicitud);
+        if (!solicitud.getProveedor().getIdProveedor().equals(idProveedor)) {
+            throw new IllegalArgumentException("La solicitud no pertenece al proveedor autenticado.");
+        }
+        String actual = solicitud.getEstado() == null ? "PENDIENTE" : solicitud.getEstado().toUpperCase();
+        String nuevo = estado == null ? "" : estado.toUpperCase();
+        boolean transicionValida = ("PENDIENTE".equals(actual)
+                && ("ACEPTADA".equals(nuevo) || "RECHAZADA".equals(nuevo)))
+                || ("ACEPTADA".equals(actual) && "FINALIZADA".equals(nuevo));
+        if (!transicionValida) {
+            throw new IllegalArgumentException("La transición de estado solicitada no es válida.");
+        }
+        solicitud.setEstado(nuevo);
+        solicitudRepository.save(solicitud);
     }
 }

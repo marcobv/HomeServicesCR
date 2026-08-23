@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, Long> {
     List<Disponibilidad> findByProveedorIdProveedorAndDisponibleTrueOrderByDiaSemanaAscHoraInicioAsc(Long idProveedor);
+    List<Disponibilidad> findByProveedorIdProveedorOrderByDiaSemanaAscHoraInicioAsc(Long idProveedor);
 }

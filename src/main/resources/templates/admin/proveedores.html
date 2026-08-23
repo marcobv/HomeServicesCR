@@ -16,10 +16,10 @@
                 <h2 class="h5 fw-bold text-primary-hs">Proveedores registrados</h2>
                 <div class="table-responsive card border-0 shadow-sm rounded-4 p-3">
                     <table class="table align-middle mb-0">
-                        <thead><tr><th>Nombre</th><th>Especialidad</th><th>Ubicación</th><th>Calificación</th><th>Verificado</th></tr></thead>
+                        <thead><tr><th>Nombre</th><th>Especialidad</th><th>Ubicación</th><th>Calificación</th><th>Verificado</th><th>Acción</th></tr></thead>
                         <tbody>
                             <tr th:if="${#lists.isEmpty(proveedores)}">
-                                <td colspan="5" class="text-center text-muted py-4">
+                                <td colspan="6" class="text-center text-muted py-4">
                                     No hay proveedores registrados en la plataforma.
                                 </td>
                             </tr>
@@ -38,6 +38,12 @@
                                           th:text="${proveedor.verificado} ? 'Sí' : 'Pendiente'">
                                         Sí
                                     </span>
+                                </td>
+                                <td>
+                                    <form th:action="@{/admin/proveedores/{id}/verificacion(id=${proveedor.idProveedor})}" method="post">
+                                        <button class="btn btn-sm" th:classappend="${proveedor.verificado ? ' btn-outline-warning' : ' btn-outline-success'}"
+                                                type="submit" th:text="${proveedor.verificado ? 'Quitar verificación' : 'Verificar'}">Verificar</button>
+                                    </form>
                                 </td>
                             </tr>
                         </tbody>

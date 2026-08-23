@@ -11,8 +11,8 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long> {
 
     List<Servicio> findByActivoTrueOrderByNombreAsc();
     List<Servicio> findTop6ByActivoTrueOrderByProveedorCalificacionPromedioDesc();
-//Denisse
     List<Servicio> findByProveedorIdProveedorAndActivoTrueOrderByNombreAsc(Long idProveedor);
+    List<Servicio> findByProveedorIdProveedorOrderByNombreAsc(Long idProveedor);
     @Query("SELECT s FROM Servicio s " +
            "WHERE s.activo = true " +
            "AND (:texto IS NULL OR :texto = '' OR LOWER(s.nombre) LIKE LOWER(CONCAT('%', :texto, '%')) " +
@@ -21,9 +21,11 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long> {
            "AND (:idCategoria IS NULL OR s.categoria.idCategoria = :idCategoria) " +
            "AND (:ubicacion IS NULL OR :ubicacion = '' OR LOWER(s.proveedor.ubicacion) LIKE LOWER(CONCAT('%', :ubicacion, '%'))) " +
            "AND (:precioMax IS NULL OR s.precioReferencia <= :precioMax) " +
+           "AND (:calificacionMin IS NULL OR s.proveedor.calificacionPromedio >= :calificacionMin) " +
            "ORDER BY s.proveedor.calificacionPromedio DESC, s.nombre ASC")
     List<Servicio> buscarServicios(@Param("texto") String texto,
                                    @Param("idCategoria") Long idCategoria,
                                    @Param("ubicacion") String ubicacion,
-                                   @Param("precioMax") BigDecimal precioMax);
+                                   @Param("precioMax") BigDecimal precioMax,
+                                   @Param("calificacionMin") Double calificacionMin);
 }

@@ -6,6 +6,8 @@ import com.homeservices.service.SolicitudService;
 import com.homeservices.service.UsuarioService;
 import java.util.Set;
 import java.util.stream.Collectors;
+import jakarta.servlet.http.HttpSession;
+import com.homeservices.config.SessionKeys;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +30,9 @@ public class ClienteController {
     }
 
     @GetMapping("/panel")
-    public String panel(Model model) {
-        var cliente = usuarioService.obtenerClienteDemo();
+    public String panel(Model model, HttpSession session) {
+        Long idUsuario = (Long) session.getAttribute(SessionKeys.USER_ID);
+        var cliente = usuarioService.obtenerRequerido(idUsuario);
         var solicitudes = solicitudService.listarPorCliente(cliente.getIdUsuario());
 
         Set<Long> solicitudesCalificadas = calificacionService.listarPorCliente(cliente.getIdUsuario())

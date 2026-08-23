@@ -27,12 +27,14 @@ public class ServicioService {
 
     @Transactional(readOnly = true)
     public Servicio obtener(Long id) {
-        return servicioRepository.findById(id).orElse(new Servicio());
+        return servicioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("El servicio indicado no existe."));
     }
 
     @Transactional(readOnly = true)
-    public List<Servicio> buscar(String texto, Long idCategoria, String ubicacion, BigDecimal precioMax) {
-        return servicioRepository.buscarServicios(texto, idCategoria, ubicacion, precioMax);
+    public List<Servicio> buscar(String texto, Long idCategoria, String ubicacion,
+                                 BigDecimal precioMax, Double calificacionMin) {
+        return servicioRepository.buscarServicios(texto, idCategoria, ubicacion, precioMax, calificacionMin);
     }
 
     @Transactional
@@ -47,5 +49,26 @@ public class ServicioService {
     public List<Servicio> listarPorProveedor(Long idProveedor) {
         return servicioRepository
             .findByProveedorIdProveedorAndActivoTrueOrderByNombreAsc(idProveedor);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Servicio> listarTodosPorProveedor(Long idProveedor) {
+        return servicioRepository.findByProveedorIdProveedorOrderByNombreAsc(idProveedor);
+    }
+
+    @Transactional
+    public void cambiarEstado(Long idServicio, Long idProveedor) {
+        Servicio servicio = obtenerDelProveedor(idServicio, idProveedor);
+        servicio.setActivo(!Boolean.TRUE.equals(servicio.getActivo()));
+        servicioRepository.save(servicio);
+    }
+
+    @Transactional(readOnly = true)
+    public Servicio obtenerDelProveedor(Long idServicio, Long idProveedor) {
+        Servicio servicio = obtener(idServicio);
+        if (!servicio.getProveedor().getIdProveedor().equals(idProveedor)) {
+            throw new IllegalArgumentException("El servicio no pertenece al proveedor autenticado.");
+        }
+        return servicio;
     }
 }

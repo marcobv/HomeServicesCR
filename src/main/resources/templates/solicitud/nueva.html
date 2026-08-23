@@ -12,13 +12,24 @@
                 <div class="card-body p-4">
                     <form th:action="@{/solicitudes/guardar}" th:object="${solicitud}" method="post" class="row g-3">
                         <input type="hidden" th:field="*{servicio.idServicio}"/>
-                        <div class="col-md-6">
-                            <label class="form-label">Fecha</label>
-                            <input th:field="*{fechaServicio}" type="date" class="form-control" required/>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Hora</label>
-                            <input th:field="*{horaServicio}" type="time" class="form-control" required/>
+                        <div class="col-12">
+                            <label class="form-label" for="horarioSeleccionado">Horario disponible</label>
+                            <select id="horarioSeleccionado" name="horarioSeleccionado" class="form-select"
+                                    th:disabled="${#lists.isEmpty(horariosDisponibles)}" required>
+                                <option value="">Seleccione la fecha y hora que le resulte conveniente</option>
+                                <option th:each="horario : ${horariosDisponibles}"
+                                        th:value="${horario.valor}"
+                                        th:text="${horario.etiqueta}">
+                                    Lunes 24/08/2026 · 08:00 a 09:00
+                                </option>
+                            </select>
+                            <div class="form-text">
+                                Solo se muestran espacios configurados por el proveedor que todavía no han sido reservados.
+                            </div>
+                            <div class="alert alert-warning mt-3 mb-0"
+                                 th:if="${#lists.isEmpty(horariosDisponibles)}">
+                                Este proveedor no tiene espacios libres durante los próximos 60 días.
+                            </div>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Dirección</label>
@@ -30,7 +41,8 @@
                         </div>
                         <div class="col-12 d-flex justify-content-end gap-2">
                             <a class="btn btn-outline-secondary" th:href="@{/servicios/resultados}">Cancelar</a>
-                            <button class="btn btn-primary-hs" type="submit">Confirmar solicitud</button>
+                            <button class="btn btn-primary-hs" type="submit"
+                                    th:disabled="${#lists.isEmpty(horariosDisponibles)}">Confirmar solicitud</button>
                         </div>
                     </form>
                 </div>
