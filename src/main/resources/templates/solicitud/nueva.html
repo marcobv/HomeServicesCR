@@ -22,11 +22,11 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Dirección</label>
-                            <input th:field="*{direccion}" class="form-control" placeholder="Provincia, cantón, distrito y señas" required/>
+                            <input th:field="*{direccion}" class="form-control" placeholder="Provincia, cantón, distrito y señas" maxlength="255" required/>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Descripción del trabajo</label>
-                            <textarea th:field="*{descripcionTrabajo}" class="form-control" rows="5" placeholder="Explique brevemente qué necesita" required></textarea>
+                            <textarea th:field="*{descripcionTrabajo}" class="form-control" rows="5" placeholder="Explique brevemente qué necesita" maxlenght="1000" required></textarea>
                         </div>
                         <div class="col-12 d-flex justify-content-end gap-2">
                             <a class="btn btn-outline-secondary" th:href="@{/servicios/resultados}">Cancelar</a>
