@@ -11,9 +11,6 @@
                 <div class="card-body p-4">
                     <h1 class="h3 fw-bold text-primary-hs mb-3">Iniciar sesión</h1>
                     <p class="text-muted">Use un usuario de prueba o uno registrado desde el formulario.</p>
-                    <div class="alert alert-warning" th:if="${param.requerido}">
-                        Debe iniciar sesión para acceder a esa sección.
-                    </div>
                     <form th:action="@{/usuarios/login}" method="post">
                         <div class="mb-3">
                             <label class="form-label">Correo electrónico</label>
@@ -27,8 +24,9 @@
                     </form>
                     <div class="text-center mt-3">
                         <a th:href="@{/usuarios/registro}">Crear una cuenta</a>
-                        <span class="mx-2">·</span>
-                        <a th:href="@{/usuarios/recuperar}">Recuperar contraseña</a>
+                    </div>
+                    <div class="alert alert-info small mt-4 mb-0">
+                        Usuarios demo: marco.demo@homeservices.cr, proveedor.demo@homeservices.cr, admin@homeservices.cr. Contraseña: 123456.
                     </div>
                 </div>
             </div>
